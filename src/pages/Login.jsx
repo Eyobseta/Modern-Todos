@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import style from './Login.module.css';
 import Button from '../components/button/Button';
+import apiFetch from '../api';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ export default function Login() {
         setError('');
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:3000/api/auth/login', {
+            const res = await apiFetch('/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),

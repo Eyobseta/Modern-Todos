@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import { AuthContext } from './authContext';
+import apiFetch from '../api';
 
 const initialState = {
     user: null,
@@ -43,7 +44,7 @@ export const AuthProvider = ({ children }) => {
         let isMounted = true;
 
         if (state.token) {
-            fetch('http://localhost:3000/api/auth/me', {
+            apiFetch('/auth/me', {
                 headers: { Authorization: `Bearer ${state.token}` }
             })
                 .then(res => {
