@@ -1,0 +1,94 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff;
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header h1 {
+  font-size: 2rem;
+  background: linear-gradient(45deg, #8a2be2, #9370db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.loading, .error {
+  text-align: center;
+  margin: 2rem;
+}
+
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.daySection {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+.dayTitle {
+  color: #8a2be2;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #8a2be2;
+  padding-bottom: 0.5rem;
+}
+
+.todoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.todoItem:last-child {
+  border-bottom: none;
+}
+
+.todoItem span {
+  font-size: 1rem;
+  word-break: break-word;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.empty {
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  .header h1 {
+    font-size: 1.5rem;
+  }
+}

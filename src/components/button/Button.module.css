@@ -1,0 +1,62 @@
+.button {
+  font-weight: 600;
+  text-align: center;
+  border-radius: 30px;
+  color: #fff;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+  padding: 0.5rem 1.5rem;
+}
+
+.medium {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+}
+
+.small {
+  padding: 0.5rem;
+  background: transparent;
+}
+
+.small:hover {
+  transform: scale(1.1);
+}
+
+.primary {
+  background: #8a2be2;
+  box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+}
+.edit{
+  background-color: gainsboro;
+}
+.primary:hover {
+  background: #9370db;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(138, 43, 226, 0.6);
+}
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.secondary {
+  background: #483d8b;
+}
+
+.secondary:hover {
+  background: #6a5acd;
+}
+
+.danger {
+  background: #ff6b6b;
+}
+
+.danger:hover {
+  background: #ff4c4c;
+}

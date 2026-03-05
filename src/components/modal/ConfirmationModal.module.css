@@ -1,0 +1,21 @@
+.content {
+    text-align: center;
+}
+
+.title {
+    color: #8a2be2;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.message {
+    color: #fff;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}

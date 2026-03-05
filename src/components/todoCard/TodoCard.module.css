@@ -1,0 +1,70 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  transition: all 0.3s;
+  border: 1px solid transparent;
+}
+
+.card:hover {
+  border-color: #8a2be2;
+  background: rgba(138, 43, 226, 0.1);
+}
+
+.completedCard {
+  opacity: 0.7;
+}
+
+.cardContent {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.status {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.cardContent h2 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.completedText {
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.editInput {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #8a2be2;
+  border-radius: 10px;
+  padding: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 300px;
+  outline: none;
+} 
+
+
+.cardAction {
+  display: flex;
+  gap: 0.8rem;
+}
+
+@media (max-width: 480px) {
+  .cardContent h2 {
+    font-size: 1rem;
+  }
+  .cardAction {
+    gap: 0.3rem;
+  }
+}
