@@ -40,42 +40,34 @@ function authReducer(state, action) {
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
-    useEffect(() => {
-        let isMounted = true;
+useEffect(() => {
+    let isMounted = true;
 
-        if (state.token) {
-            apiFetch('/auth/me', {
-                headers: { Authorization: `Bearer ${state.token}` }
+    if (state.token) {
+        apiFetch('/auth/me')
+            .then(userData => {
+                if (isMounted) {
+                    dispatch({ type: 'SET_USER', payload: userData });
+                    dispatch({ type: 'SET_LOADING', payload: false });
+                }
             })
-                .then(res => {
-                    if (!isMounted) return;
-                    if (res.ok) return res.json();
-                    throw new Error('Invalid token');
-                })
-                .then(userData => {
-                    if (isMounted) {
-                        dispatch({ type: 'SET_USER', payload: userData });
-                        dispatch({ type: 'SET_LOADING', payload: false });
-                    }
-                })
-                .catch(() => {
-                    if (isMounted) {
-                        localStorage.removeItem('token');
-                        dispatch({ type: 'SET_TOKEN', payload: null });
-                        dispatch({ type: 'SET_LOADING', payload: false });
-                    }
-                });
-        } else {
-            // No token: ensure loading becomes false after a microtask
-            Promise.resolve().then(() => {
-                if (isMounted) dispatch({ type: 'SET_LOADING', payload: false });
+            .catch(() => {
+                if (isMounted) {
+                    localStorage.removeItem('token');
+                    dispatch({ type: 'SET_TOKEN', payload: null });
+                    dispatch({ type: 'SET_LOADING', payload: false });
+                }
             });
-        }
+    } else {
+        Promise.resolve().then(() => {
+            if (isMounted) dispatch({ type: 'SET_LOADING', payload: false });
+        });
+    }
 
-        return () => {
-            isMounted = false;
-        };
-    }, [state.token]); // depends only on token
+    return () => {
+        isMounted = false;
+    };
+}, [state.token]);
 
     const login = (userData, token) => {
         dispatch({ type: 'LOGIN', payload: { user: userData, token } });
