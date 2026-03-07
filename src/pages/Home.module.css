@@ -281,3 +281,23 @@
     font-size: 0.8rem;
   }
 }
+
+/* At the end of your Home.module.css, add or update these */
+
+/* Ensure date input has consistent height and font */
+.newTodo input[type="date"] {
+  line-height: normal;
+  min-height: 48px; /* match text input height */
+}
+
+/* On very small screens, make the date input full width and stack nicely */
+@media (max-width: 480px) {
+  .newTodo {
+    gap: 0.8rem;
+  }
+  .newTodo input[type="date"] {
+    width: 100%;
+    padding: 0.8rem 1rem; /* slightly smaller padding on mobile */
+    font-size: 1rem;
+  }
+}

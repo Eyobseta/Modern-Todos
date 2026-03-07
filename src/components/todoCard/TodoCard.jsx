@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import style from './TodoCard.module.css';
 import Button from '../button/Button';
-import { FaEdit, FaTrash, FaCheckCircle, FaRegCircle } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaCheck, FaTimes, FaCheckCircle, FaRegCircle } from 'react-icons/fa';
 
 export default function TodoCard({ todo, onToggleComplete, onEdit, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -17,6 +17,12 @@ export default function TodoCard({ todo, onToggleComplete, onEdit, onDelete }) {
         due_date: editDueDate || null
       });
     }
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setEditTitle(todo.title);
+    setEditDueDate(todo.due_date ? todo.due_date.split('T')[0] : '');
     setIsEditing(false);
   };
 
@@ -49,7 +55,6 @@ export default function TodoCard({ todo, onToggleComplete, onEdit, onDelete }) {
                 type="text"
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
-                onBlur={handleEditSave}
                 onKeyPress={handleKeyPress}
                 autoFocus
                 className={style.editInput}
@@ -75,12 +80,25 @@ export default function TodoCard({ todo, onToggleComplete, onEdit, onDelete }) {
         </div>
       </div>
       <div className={style.cardAction}>
-        <Button size="small" unique='edit' onClick={() => setIsEditing(true)}>
-          <FaEdit color="#f06a03" size={20} />
-        </Button>
-        <Button size="small" unique='edit' onClick={onDelete}>
-          <FaTrash color="#d80c0c" size={20} />
-        </Button>
+        {isEditing ? (
+          <>
+            <Button size="small" unique='edit' onClick={handleEditSave}>
+              <FaCheck color="#32cd32" size={20} />
+            </Button>
+            <Button size="small" unique='edit' onClick={handleCancel}>
+              <FaTimes color="#ff6b6b" size={20} />
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button size="small" unique='edit' onClick={() => setIsEditing(true)}>
+              <FaEdit color="#f06a03" size={20} />
+            </Button>
+            <Button size="small" unique='edit' onClick={onDelete}>
+              <FaTrash color="#d80c0c" size={20} />
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );
