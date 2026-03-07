@@ -13,23 +13,23 @@ export default function Home() {
     const { user, logout } = useAuth();
     const [todos, setTodos] = useState([]);
     const [newTodo, setNewTodo] = useState('');
+    const [newDueDate, setNewDueDate] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [sortBy, setSortBy] = useState('default'); // 'default' or 'due_date'
     const [selectedDay, setSelectedDay] = useState(() => {
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         return days[new Date().getDay()];
     });
     const [modalConfig, setModalConfig] = useState({
-    isOpen: false,
-    message: '',
-    onConfirm: null
+        isOpen: false,
+        message: '',
+        onConfirm: null
     });
 
-
     const openConfirmModal = (message, onConfirm) => {
-    setModalConfig({ isOpen: true, message, onConfirm });
-};
-
+        setModalConfig({ isOpen: true, message, onConfirm });
+    };
 
     const navigate = useNavigate();
 
@@ -50,6 +50,16 @@ export default function Home() {
         fetchTodos();
     }, [selectedDay]);
 
+    // Sort todos based on sortBy
+    const sortedTodos = [...todos].sort((a, b) => {
+        if (sortBy === 'due_date') {
+            if (!a.due_date) return 1;  // nulls last
+            if (!b.due_date) return -1;
+            return new Date(a.due_date) - new Date(b.due_date);
+        }
+        return 0; // keep original order (by day/created_at)
+    });
+
     const streakCount = todos.filter(todo => todo.completed).length;
 
     async function addTodoHandler() {
@@ -59,10 +69,15 @@ export default function Home() {
         try {
             const createdTodo = await apiFetch('/todos', {
                 method: 'POST',
-                body: JSON.stringify({ title: newTodo, day: selectedDay }),
+                body: JSON.stringify({ 
+                    title: newTodo, 
+                    day: selectedDay,
+                    due_date: newDueDate || null 
+                }),
             });
             setTodos(prev => [...prev, createdTodo]);
             setNewTodo('');
+            setNewDueDate('');
         } catch (err) {
             setError(err.message);
         } finally {
@@ -101,11 +116,11 @@ export default function Home() {
     }
 
     const handleLogout = () => {
-    openConfirmModal('Are you sure you want to logout?', () => {
-        setModalConfig(prev => ({ ...prev, isOpen: false }));
-        logout();
-    });
-};
+        openConfirmModal('Are you sure you want to logout?', () => {
+            setModalConfig(prev => ({ ...prev, isOpen: false }));
+            logout();
+        });
+    };
 
     return (
         <div className={style.home}>
@@ -133,6 +148,12 @@ export default function Home() {
                     onChange={e => setNewTodo(e.target.value)}
                     onKeyPress={e => e.key === 'Enter' && addTodoHandler()}
                 />
+                <input
+                    type="date"
+                    value={newDueDate}
+                    onChange={(e) => setNewDueDate(e.target.value)}
+                    className={style.dateInput}
+                />
                 <Button size="medium" type="primary" onClick={addTodoHandler}>
                     Add
                 </Button>
@@ -149,19 +170,25 @@ export default function Home() {
                         ))}
                     </select>
                 </div>
+                <div className={style.sort}>
+                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                        <option value="default">Default</option>
+                        <option value="due_date">Sort by Due Date</option>
+                    </select>
+                </div>
                 <a className={style.viewAllLink} onClick={() => navigate('/all')}>
                     View All
                 </a>
             </div>
 
             <div className={style.todos}>
-                {todos.length === 0 && !loading && <p className={style.empty}>No todos for {selectedDay}</p>}
-                {todos.map(todo => (
+                {sortedTodos.length === 0 && !loading && <p className={style.empty}>No todos for {selectedDay}</p>}
+                {sortedTodos.map(todo => (
                     <TodoCard
                         key={todo.id}
                         todo={todo}
                         onToggleComplete={() => updateTodo(todo.id, { completed: !todo.completed })}
-                        onEdit={(newTitle) => updateTodo(todo.id, { title: newTitle })}
+                        onEdit={(updates) => updateTodo(todo.id, updates)}
                         onDelete={() => deleteTodo(todo.id)}
                     />
                 ))}

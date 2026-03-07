@@ -31,7 +31,14 @@
   align-items: center;
 }
 
-.cardContent h2 {
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+.textContent h2 {
   font-size: 1.1rem;
   font-weight: 500;
   word-break: break-word;
@@ -40,6 +47,12 @@
 .completedText {
   text-decoration: line-through;
   color: rgba(255, 255, 255, 0.5);
+}
+
+.dueDate {
+  font-size: 0.8rem;
+  color: #9370db;
+  opacity: 0.9;
 }
 
 .editInput {
@@ -52,8 +65,21 @@
   width: 100%;
   max-width: 300px;
   outline: none;
-} 
+}
 
+.editDateInput {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #8a2be2;
+  border-radius: 10px;
+  padding: 0.5rem;
+  color: #fff;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+  width: 100%;
+  max-width: 200px;
+  outline: none;
+  color-scheme: dark;
+}
 
 .cardAction {
   display: flex;
@@ -61,10 +87,13 @@
 }
 
 @media (max-width: 480px) {
-  .cardContent h2 {
+  .textContent h2 {
     font-size: 1rem;
   }
   .cardAction {
     gap: 0.3rem;
+  }
+  .editDateInput {
+    max-width: 100%;
   }
 }

@@ -13,6 +13,8 @@
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .header h1 {
@@ -71,11 +73,19 @@
 .todoItem span {
   font-size: 1rem;
   word-break: break-word;
+  flex: 1;
 }
 
 .completed {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+.dueDate {
+  font-size: 0.75rem;
+  color: #9370db;
+  margin-left: auto;
+  white-space: nowrap;
 }
 
 .empty {
@@ -90,5 +100,13 @@
   }
   .header h1 {
     font-size: 1.5rem;
+  }
+  .todoItem {
+    flex-wrap: wrap;
+  }
+  .dueDate {
+    margin-left: 0;
+    width: 100%;
+    text-align: right;
   }
 }

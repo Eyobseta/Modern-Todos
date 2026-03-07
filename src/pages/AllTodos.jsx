@@ -34,6 +34,13 @@ export default function AllTodos() {
         return acc;
     }, {});
 
+    // Format due date for display
+    const formatDueDate = (dateString) => {
+        if (!dateString) return null;
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    };
+
     return (
         <div className={style.container}>
             <div className={style.header}>
@@ -65,6 +72,11 @@ export default function AllTodos() {
                                         <span className={todo.completed ? style.completed : ''}>
                                             {todo.title}
                                         </span>
+                                        {todo.due_date && (
+                                            <span className={style.dueDate}>
+                                                {formatDueDate(todo.due_date)}
+                                            </span>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
